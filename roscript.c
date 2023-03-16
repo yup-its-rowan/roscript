@@ -23,8 +23,26 @@ int main(int argc, char const *argv[])
         if (strcmp(argv[i], "-p") == 0){
             flagPrint = 1;
         } else if (!done){
-            input = argv[i];
-            done = 1;
+            if (strstr(argv[i], ".rse") != NULL){
+                FILE * fptr;
+                fptr = fopen(argv[i], "r");
+                if (fptr == NULL){
+                    printf("File not found");
+                    exit(1);
+                }
+                //putting file into string
+                fseek(fptr, 0, SEEK_END);
+                long fsize = ftell(fptr);
+                fseek(fptr, 0, SEEK_SET);
+                char *string = malloc(fsize + 1);
+                fread(string, fsize, 1, fptr);
+                fclose(fptr);
+                input = string;
+                done = 1;
+            } else {
+                input = argv[i];
+                done = 1;
+            }    
         }
     }
 
@@ -37,7 +55,7 @@ int main(int argc, char const *argv[])
     int instructionPointer = 0;
     char currentInstruction = input[instructionPointer];
     int pocket = 0;
-    while (currentInstruction != '\0'){
+    while (currentInstruction != '\0' && currentInstruction != EOF){ 
         if (currentInstruction == '<'){
             tapePointer--;
         } else if (currentInstruction == '>'){
@@ -50,6 +68,10 @@ int main(int argc, char const *argv[])
             printf("%c", tape[tapePointer]);
         } else if (currentInstruction == ','){
             tape[tapePointer] = getchar();
+            if (!(input[instructionPointer+1] == '>' && input[instructionPointer+2] == ',')){
+                int c;
+                while ( (c = getchar()) != '\n' && c != EOF ) { }
+            }
         } else if (currentInstruction == '['){
             if (tape[tapePointer] == 0){
                 int bracketCount = 1;

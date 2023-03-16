@@ -15,16 +15,16 @@ Here they all are listed below.
 | >   | Move pointer right        |
 | + | Increment value at pointer |
 | - | Decrement value at pointer 
-|.| Print the value at the pointer|
-|, | Store input at pointer|
-|[| If value at pointer = 0, skip to after corresponding ]|
-|]| Jump to corresponding [|
-|{| Copy value at pointer to value of pocket|
-|}| Copy value in pocket to value at pointer|
-|=| Save following cells up until \0 in file named after value in cell|
-|_| Load file into following cells|
-|^| Sleep a number of ms equivalent to value at pointer|
-|#| Clear number of cells equivalent to value at pointer|
+| .| Print the value at the pointer|
+| , | Store input at pointer|
+| [| If value at pointer = 0, skip to after corresponding ]|
+| ]| Jump to corresponding [|
+| {| Copy value at pointer to value of pocket|
+| }| Copy value in pocket to value at pointer|
+| =| Save following cells up until \0 in file named after value in cell|
+| _| Load file into following cells|
+| ^| Sleep a number of ms equivalent to value at pointer|
+| #| Clear number of cells equivalent to value at pointer|
 
 Due to being on a new laptop I didn't have access to a Unix shell and instead added the option to use a '.rse' file (RoScript Executable?) as input.
 

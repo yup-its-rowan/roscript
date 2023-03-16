@@ -101,18 +101,20 @@ int main(int argc, char const *argv[])
             tape[tapePointer] = pocket;
         } else if (currentInstruction == '='){
             int tempPointer = tapePointer;
-            tempPointer++;
             while (tape[tempPointer] != 0){ //because 0 is /0 and technically we're using int array
                 tempPointer++;
             }
-            int length = tempPointer - tapePointer+1;
+            int length = tempPointer - tapePointer+1-1;
             char data[length];
-            for (int i = 1; i < length; i++){
-                data[i] = tape[tapePointer+i];
+            for (int i = 0; i < length; i++){
+                data[i] = tape[tapePointer+i+1];
             }
             FILE * fptr;
-            char* saveName = "a.rsd";
-            saveName[0] = (char)tape[tapePointer];
+            
+            char saveName[] = "a.rsd";
+            saveName[0] = tape[tapePointer];
+            printf("%s", saveName);
+            
             fptr = fopen(saveName, "w");
             if (fptr == NULL){
                 printf("Error!");
@@ -122,8 +124,8 @@ int main(int argc, char const *argv[])
             fclose(fptr);
         } else if (currentInstruction == '_'){
             FILE * fptr;
-            char* saveName = "a.rsd";
-            saveName[0] = (char)tape[tapePointer];
+            char saveName[] = "a.rsd";
+            saveName[0] = tape[tapePointer];
             fptr = fopen(saveName, "r");
             if (fptr == NULL){
                 printf("Error!");

@@ -15,20 +15,20 @@ Here they all are listed below.
 
 | Syntax      | Description |
 | ----------- | ----------- |
-| <           | Move pointer left       |
-| >   | Move pointer right        |
-| + | Increment value at pointer |
-| - | Decrement value at pointer 
-| .| Print the value at the pointer|
-| , | Store input at pointer|
-| \[| If value at pointer = 0, skip to after corresponding ]|
+| <           | Move tape pointer left       |
+| >   | Move tape pointer right        |
+| + | Increment value at tape pointer |
+| - | Decrement value at tape pointer 
+| .| Print the value at the tape pointer as char|
+| , | Store char input at tape pointer as int|
+| \[| If value at tape pointer = 0, skip to after corresponding ]|
 | ]| Jump to corresponding \[|
-| {| Copy value at pointer to value of pocket|
-| }| Copy value in pocket to value at pointer|
-| =| Save following cells up until \0 in file named after value in cell|
-| \_| Load file into following cells|
-| ^| Sleep a number of ms equivalent to value at pointer|
-| #| Clear number of cells equivalent to value at pointer|
+| {| Copy value at tape pointer to value of pocket|
+| }| Copy value in pocket to value at tape pointer|
+| =| Save following cells up until \0 in new file named after char value at tape pointer|
+| \_| Load file named after char value at tape pointer into following cells|
+| ^| Sleep a number of ms equivalent to value at tape pointer|
+| #| Clear number of cells equivalent to value at tape pointer|
 
 After the operand has finished executing, the instruction pointer is incremented and the program continues on.
 

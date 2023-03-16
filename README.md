@@ -26,7 +26,7 @@ Here they all are listed below.
 |^| Sleep a number of ms equivalent to value at pointer|
 |#| Clear number of cells equivalent to value at pointer|
 
-
+Due to being on a new laptop I didn't have access to a Unix shell and instead added the option to use a '.rse' file (RoScript Executable?) as input.
 
 
 

@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
         }
     }
 
-    int tape = [tapeSize];
+    int tape[tapeSize];
     int tapePointer = 0;
     for (int i = 0; i < tapeSize; i++){
         tape[i] = 0;
@@ -72,6 +72,7 @@ int main(int argc, char const *argv[])
                     bracketCount--;
                 }
             }
+            instructionPointer--;
         } else if (currentInstruction == '{'){
             pocket = tape[tapePointer];
         } else if (currentInstruction == '}'){
@@ -107,20 +108,27 @@ int main(int argc, char const *argv[])
                 exit(1);
             }
             int index = 1;
+            char ch;
             do {
                 ch = fgetc(fptr);
                 tape[tapePointer+index] = ch;
                 index++;
             } while (ch != EOF);
             fclose(fptr);
-        } 
+        }  else if (currentInstruction == '^'){
+            sleep(tape[tapePointer]);
+            
+        } else if (currentInstruction == '#'){
+            int length = tape[tapePointer];
+            for(int i = 0; i < length; i++){
+                tape[tapePointer+i+1] = 0;
+            }
+        }
         
         
         instructionPointer++;
         currentInstruction = input[instructionPointer];
     }
     
-
-    printf("%s", input);
     return 0;
 }

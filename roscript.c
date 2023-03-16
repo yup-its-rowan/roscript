@@ -37,7 +37,7 @@ int main(int argc, char const *argv[])
     int instructionPointer = 0;
     char currentInstruction = input[instructionPointer];
     int pocket = 0;
-    while (currentInstruction != \0){
+    while (currentInstruction != '\0'){
         if (currentInstruction == '<'){
             tapePointer--;
         } else if (currentInstruction == '>'){
@@ -72,7 +72,50 @@ int main(int argc, char const *argv[])
                     bracketCount--;
                 }
             }
-        }
+        } else if (currentInstruction == '{'){
+            pocket = tape[tapePointer];
+        } else if (currentInstruction == '}'){
+            tape[tapePointer] = pocket;
+        } else if (currentInstruction == '='){
+            int tempPointer = tapePointer;
+            tempPointer++;
+            while (tape[tempPointer] != 0){ //because 0 is /0 and technically we're using int array
+                tempPointer++;
+            }
+            int length = tempPointer - tapePointer+1;
+            char data[length];
+            for (int i = 1; i < length; i++){
+                data[i] = tape[tapePointer+i];
+            }
+            FILE * fptr;
+            char* saveName = "a.rsd";
+            saveName[0] = (char)tape[tapePointer];
+            fptr = fopen(saveName, "w");
+            if (fptr == NULL){
+                printf("Error!");
+                exit(1);
+            }
+            fputs(data, fptr);
+            fclose(fptr);
+        } else if (currentInstruction == '_'){
+            FILE * fptr;
+            char* saveName = "a.rsd";
+            saveName[0] = (char)tape[tapePointer];
+            fptr = fopen(saveName, "r");
+            if (fptr == NULL){
+                printf("Error!");
+                exit(1);
+            }
+            int index = 1;
+            do {
+                ch = fgetc(fptr);
+                tape[tapePointer+index] = ch;
+                index++;
+            } while (ch != EOF);
+            fclose(fptr);
+        } 
+        
+        
         instructionPointer++;
         currentInstruction = input[instructionPointer];
     }

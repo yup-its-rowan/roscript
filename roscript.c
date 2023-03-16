@@ -113,11 +113,10 @@ int main(int argc, char const *argv[])
             
             char saveName[] = "a.rsd";
             saveName[0] = tape[tapePointer];
-            printf("%s", saveName);
             
             fptr = fopen(saveName, "w");
             if (fptr == NULL){
-                printf("Error!");
+                printf("You can't save to this file");
                 exit(1);
             }
             fputs(data, fptr);
@@ -128,7 +127,7 @@ int main(int argc, char const *argv[])
             saveName[0] = tape[tapePointer];
             fptr = fopen(saveName, "r");
             if (fptr == NULL){
-                printf("Error!");
+                printf("You can't load from this file");
                 exit(1);
             }
             int index = 1;

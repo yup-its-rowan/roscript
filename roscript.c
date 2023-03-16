@@ -5,6 +5,19 @@
 #include <string.h>
 #include <unistd.h>
 
+
+
+void debug(int flag, int tape[], int furthest){
+    if (flag){
+        for (int i = 0; i < furthest; i++){
+            printf("%c", tape[i]);
+            printf(" | ");
+        }
+        printf("%c\n", tape[furthest]);
+    }
+}
+
+
 int main(int argc, char const *argv[])
 {
     int flagPrint = 0;
@@ -18,7 +31,7 @@ int main(int argc, char const *argv[])
 
     
     int done = 0;
-    
+    int furthest = 0;
     for (int i = 1; i < argc; i++){
         if (strcmp(argv[i], "-p") == 0){
             flagPrint = 1;
@@ -60,10 +73,16 @@ int main(int argc, char const *argv[])
             tapePointer--;
         } else if (currentInstruction == '>'){
             tapePointer++;
+            if (tapePointer > furthest){
+                furthest = tapePointer;
+                debug(flagPrint, tape, furthest);
+            }
         } else if (currentInstruction == '+'){
             tape[tapePointer]++;
+            debug(flagPrint, tape, furthest);
         } else if (currentInstruction == '-'){
             tape[tapePointer]--;
+            debug(flagPrint, tape, furthest);
         } else if (currentInstruction == '.'){
             printf("%c", tape[tapePointer]);
         } else if (currentInstruction == ','){
@@ -72,6 +91,7 @@ int main(int argc, char const *argv[])
                 int c;
                 while ( (c = getchar()) != '\n' && c != EOF ) { }
             }
+            debug(flagPrint, tape, furthest);
         } else if (currentInstruction == '['){
             if (tape[tapePointer] == 0){
                 int bracketCount = 1;
@@ -99,6 +119,7 @@ int main(int argc, char const *argv[])
             pocket = tape[tapePointer];
         } else if (currentInstruction == '}'){
             tape[tapePointer] = pocket;
+            debug(flagPrint, tape, furthest);
         } else if (currentInstruction == '='){
             int tempPointer = tapePointer;
             while (tape[tempPointer] != 0){ //because 0 is /0 and technically we're using int array
@@ -135,9 +156,13 @@ int main(int argc, char const *argv[])
             do {
                 ch = fgetc(fptr);
                 tape[tapePointer+index] = ch;
+                if (tapePointer+index > furthest){
+                    furthest = tapePointer+index;
+                }
                 index++;
             } while (ch != EOF);
             fclose(fptr);
+            debug(flagPrint, tape, furthest);
         }  else if (currentInstruction == '^'){
             sleep(tape[tapePointer]);
             
@@ -146,8 +171,11 @@ int main(int argc, char const *argv[])
             for(int i = 0; i < length; i++){
                 tape[tapePointer+i+1] = 0;
             }
-        }
-        
+            if (furthest <= tapePointer+length){
+                furthest = tapePointer;
+            }
+            debug(flagPrint, tape, furthest);
+        }         
         
         instructionPointer++;
         currentInstruction = input[instructionPointer];
@@ -155,3 +183,5 @@ int main(int argc, char const *argv[])
     
     return 0;
 }
+
+
